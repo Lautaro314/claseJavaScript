@@ -28,6 +28,9 @@ function agregarProductoAlCarrito (product) {
     alert("este producto no existe");
 
     }
+
+    console.log(carritoProducto);
+    
     
 }
     
