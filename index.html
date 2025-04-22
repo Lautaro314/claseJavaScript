@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
-    <h1>LEARNING JAVASCRIPT</h1>
-    <p>En esta entrega el programa consiste sobre un carrito. El usuario lo que tiene que hacer es elegir un producto desde la lista y agregarlo al carrito enumerándolo.</p>
-    <p>En este proyecto la idea es que el usuario pueda agregar y/o eliminar el producto que fue elegido desde la lista</p>
 
+    <div class="menuDeNavegacion">
+        <h1>Ecommerce</h1>
+        <img id="carrito-icono"  src="./img/carritoDeCompras.png" alt="carrito de compras">
+    </div>
+    
+    
+    <h2>CATALOGOS DISPONILES:</h2>
+    <div id="contenedor" class="d-flex flex-wrap justify-content-center gap-3"></div>
+
+    <div id="carrito-visual"></div>
 
     
+    <div id="productos-eliminar"></div>
+    
     <script src="./JS/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+.menuDeNavegacion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.menuDeNavegacion h1 {
+    font-size: 309%;
+}
+
+.menuDeNavegacion img {
+    height: 100px;
+    width: 100px;
+    background-color: white;
+}
+
+
+h2 {
+    text-align: center;
+    text-decoration: underline;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: blue;
+}
+
+#carrito-icono {
+    cursor: pointer;
+}
+
