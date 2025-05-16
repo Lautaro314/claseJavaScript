@@ -1,39 +1,65 @@
-const carritoProductos = [];
+//const { createElement } = require("react");
 
-const productosDisponibles = [
+//const { createElement } = require("react");
+
+let carritoProductos = [];
+
+let productosDisponibles = [];
+
+async function cargarProductos () {
+
+    try {
+        
+        const response = await fetch ('http://127.0.0.1:5501/JSON/productos.json');
+
+        if (!response.ok) {
+            
+            throw new Error ("No se puede acceder a los datos");
+        }
+        const data = await response.json();
+        
+        return data;
+        
     
-    {
-        id:1 , 
-        nombre:"Juego de sabanas", 
-        precio: 10000
-    },
-    {
-        id:2 , 
-        nombre:"Toallas" , 
-        precio: 20000
-    },
-    {
-        id:3 , 
-        nombre:"Termos marcianos Stanley", 
-        precio: 250000 
-    },
-    {
-        id:4, 
-        nombre:"Mochilas", 
-        precio: 15000
-    },
+    } catch (error)  {
 
-]
+        mostrarError(error)
+        return[];
+        
+    }
+
+}
 
 
-//MOSTRAR LOS PRODUCTOS VISUALMENTE 
-function productosDeCompra() {
+cargarProductos().then((productos) => {
+    productosDisponibles = productos;
+    productosDeCompra(productos);  
+    agregarAlCarrito();
+});
+
+
+
+function mostrarError (error) {
+    console.error("Error capturado" , error);
+    
+
+    Swal.fire({
+        icon:"error",
+        title:"Oops",
+        text:"Algo pasó al obtener los datos!",
+
+    });
+}
+
+
+
+function productosDeCompra(productos) {
     const productosDom = document.getElementById("contenedor");
 
-    productosDom.innerHTML = productosDisponibles.map(articulos => {
+    productosDom.innerHTML = productos.map(articulos => {
         return `
             <div class="card" style="width: 18rem; margin: 10px;">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="${articulos.imagen}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Nombre: ${articulos.nombre}</h5>
                     <p class="card-text">Precio: ${articulos.precio}</p>
@@ -45,115 +71,163 @@ function productosDeCompra() {
 
 }
 
-productosDeCompra()
+function visualizacionDeProductoEnElCarrito () {
+    const carrito = document.getElementById("carrito-visual");
+
+    carrito.innerHTML = "";
+
+    carritoProductos.forEach(producto => {
+
+        carrito.innerHTML +=  `
+        <h5 class="card-title">Nombre: ${producto.nombre}</h5>
+        <p class="card-text">Precio: ${producto.precio}</p>
+        <a href="#" class="btn btn-primary eliminar-btn" data-id="${producto.id}">ELIMINAR</a>
+        `
+
+    })
+
+    eliminarProducto();
+
+}
 
 
 
-//VISUALIZACION DE PRODUCTOS AGREGADOS AL CARRITO
-/*function eventoClickDelCarrito () {
+
+
+function funcionlidadDeLaImagenCarrito () {
+    const carritoProducto = document.getElementById("carrito-icono");
+
+    carritoProducto.addEventListener ("click" , () => {
+        if(carritoProducto) {
+            abrirElCarrito();
+            visualizacionDeProductoEnElCarrito();
+        }
+    })
+}
+
+funcionlidadDeLaImagenCarrito();
+
+
+
+function abrirElCarrito () {
+    const mostrarProducto = document.getElementById("sidebar-carrito");
+
+    mostrarProducto.classList.add("mostrar");
+    cerrarElCarrito();
+
+
     
-    const imagen = document.getElementById("carrito-icono");
-    const imagen1 = document.getElementById("carrito-visual");
+}
 
-    imagen.addEventListener("click", () => {
+
+function cerrarElCarrito () {
+    const carrito = document.getElementById("cerrarCarrito");
+    const mostrarProducto1 = document.getElementById("sidebar-carrito");
+
+    carrito.addEventListener("click" , () => {
         
-        imagen.onclick = () => {console.log("click");
-        
-        };
-    
-        imagen1.innerHTML +=` 
-        <h5 class="card-title">Nombre: ${articulos.nombre}</h5> - <p class="card-text">Precio: ${articulos.precio}</p>`
+        mostrarProducto1.classList.remove("mostrar");
     
     })
 
 }
 
-eventoClickDelCarrito();
-*/
 
-//FUNCION PARA AGREGAR AL CARRITO LOS PRODUCTOS
+
 function agregarAlCarrito () {
 
     const agregarProductos = document.querySelectorAll(".agregar-btn");
-    const imagen1 = document.getElementById("carrito-visual");
 
     agregarProductos.forEach(boton => {
         
         boton.addEventListener("click", () => {
             const idProducto = parseInt(boton.getAttribute("data-id"));
             const productoAgregado1 = productosDisponibles.find(producto => producto.id === idProducto);
-            
-            imagen1.innerHTML +=`
-            <h5>${productoAgregado1.nombre}</h5>  
-            <p>${productoAgregado1.precio}</p>
-            `
+
+            let productoAlmacenados = JSON.parse(localStorage.getItem("producto")) || [];
+
+
 
             if (productoAgregado1) {
                 
-                carritoProductos.push(productoAgregado1);
+                productoAlmacenados.push(productoAgregado1);
+                
+                localStorage.setItem("producto" , JSON.stringify(productoAlmacenados))
 
-                localStorage.setItem ("producto " , JSON.stringify(productoAgregado1));
+                carritoProductos = [...productoAlmacenados];
+                
 
+                visualizacionDeProductoEnElCarrito()
+                abrirElCarrito();
+                Swal.fire({
+                    title: "Producto agregado al carrito!",
+                    icon: "success",
+                    draggable: true
+                });
+        
+                
             } 
-            
+
         });
+
     
     });
 
+
 }
 
-
-
-//FUNCION PARA ELIMINAR PRODUCTOS DESDE CARRITO
 
 function eliminarProducto () {
     
-    const productosEliminar = document.querySelectorAll(".eliminar-btn");
-    const hacerClickEliminar = document.getElementById("productos-eliminar");
-    let contenidoCarrito = "";
+    const hacerClickEliminar = document.querySelectorAll(".eliminar-btn");
 
-
-        productosEliminar.forEach( boton => {
-            boton.addEventListener("click" , () => {
-
-            const idclick = parseInt(boton.getAttribute("data-id"));
-            const indice = carritoProductos.findIndex(p => p.id === idclick);
-
-
-        hacerClickEliminar.innerHTML = " "
-
-        carritoProductos.forEach (producto => {
-
-            producto.addEventListener("click" , () =>{
-
-            contenidoCarrito += `
+            hacerClickEliminar.forEach (boton => {
+                
+                boton.addEventListener("click" , () => {
             
-            <h5>${producto[indice].nombre}</h5>
-            <p>${producto[indice].precio}</p>
-            <a href="#" class="btn btn-primary eliminar.btn" data-id= "${producto.id}">ELIMINAR</a>
-            `
 
-        })
+                const idclick = parseInt(boton.getAttribute("data-id"));
+                const indice = carritoProductos.findIndex(p => p.id === idclick);
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                    },
+                    buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({
+                    title: "¿Estas seguro que quieres eliminar este producto del carrito?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Sí, eliminar!",
+                    cancelButtonText: "No, cancelar!",
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        carritoProductos.splice(indice ,  1);
+                        localStorage.setItem("producto" , JSON.stringify(carritoProductos))
+                        visualizacionDeProductoEnElCarrito();
+                        swalWithBootstrapButtons.fire({
+                        title: "Eliminado!",
+                        text: "Tu producto fue eliminado del carrito.",
+                        icon: "success"
+                    });
+                    } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelado",
+                        text: "Tu producto sigue en el carrito",
+                        icon: "error"
+                    });
+                
+                    }
+                    
+                });
+                
+            })
 
-        })
-        
-        
-        if (indice !== -1) {
-        
-            carritoProductos.splice(indice , 1);
 
-            hacerClickEliminar.innerHTML = contenidoCarrito;
-    
-        } else {
-    
-        }
-
-        })
-
-    })
-    
-
+        });
+            
 }
-
-agregarAlCarrito();
-eliminarProducto();

@@ -11,19 +11,26 @@
 
     <div class="menuDeNavegacion">
         <h1>Ecommerce</h1>
-        <img id="carrito-icono"  src="./img/carritoDeCompras.png" alt="carrito de compras">
+        <img id="carrito-icono" class="carrito" src="./img/carritoDeCompras.png" alt="carrito de compras">
+    </div>
+    <div id="sidebar-carrito" class="sidebar-carrito">
+        <h3>Carrito</h3>
+        <div id="carrito-visual"></div>
+        <button id="cerrarCarrito" type="button" class="btn">CERRAR CARRITO</button>
     </div>
     
-    
-    <h2>CATALOGOS DISPONILES:</h2>
-    <div id="contenedor" class="d-flex flex-wrap justify-content-center gap-3"></div>
+    <section class="section1">
+        <h2>CATÁLOGOS DISPONILES:</h2>
+        <div id="contenedor" class="d-flex flex-wrap justify-content-center gap-3"></div>
 
-    <div id="carrito-visual"></div>
+        <div id="productos-carrito"></div>
 
     
-    <div id="productos-eliminar"></div>
+        <div id="productos-eliminar"></div>
+    </section>
     
     <script src="./JS/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

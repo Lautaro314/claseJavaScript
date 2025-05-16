@@ -1,0 +1,31 @@
+[
+    
+        {
+        "id":1 , 
+        "nombre":"Juego de sabanas", 
+        "precio": 10000,
+        "imagen": "img/juegoDeSabanas.jpg"
+    },
+    
+    {
+        "id":2 , 
+        "nombre":"Toallas" , 
+        "precio": 20000,
+        "imagen": "img/toallas.jpg"
+    },
+    
+    {
+        "id":3 , 
+        "nombre":"Termos marcianos Stanley", 
+        "precio": 250000,
+        "imagen":"img/termos.jpg"
+    },
+    
+    {
+        "id":4, 
+        "nombre":"Mochilas", 
+        "precio": 15000,
+        "imagen": "img/mochila.jpg"
+    }
+    
+]
