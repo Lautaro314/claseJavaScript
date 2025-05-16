@@ -1,5 +1,20 @@
 
 # primerProjecto-javaScript
 
+* Productos disponibles mostrados visualmente
 
-* Este proyecto consiste en un ecommerce, donde el usuario simplemente tiene que elegir 1 producto para agregarlo al carrito enumerandolo.
+* Agregar el producto al carrito
+
+* Eliminar el Producto del carrito
+
+* Guardar y recuperar los productos usando localStorage
+
+
+
+# Tecnologias principales
+
+* HTML
+* CSS
+* JAVASCRIPT
+* LIBRERIAS
+* JSON
