@@ -1,7 +1,6 @@
 //const { createElement } = require("react");
 
 //const { createElement } = require("react");
-
 let carritoProductos = [];
 
 let productosDisponibles = [];
