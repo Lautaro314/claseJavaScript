@@ -70,6 +70,8 @@ function productosDeCompra(productos) {
 
 }
 
+
+
 function visualizacionDeProductoEnElCarrito () {
     const carrito = document.getElementById("carrito-visual");
 
